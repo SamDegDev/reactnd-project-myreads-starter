@@ -39,14 +39,9 @@ class BooksApp extends Component {
     if (query && query.length > 0) {
       BooksAPI.search(query).then(searchedBooks => {
         if (!searchedBooks.error) {
-          // Filter the result array for duplicates
-          searchedBooks = searchedBooks.filter((filterBook, index, arrBooks) => {
-            return arrBooks.map(mapBook => mapBook.id).indexOf(filterBook.id) === index;
-          }).map(mapBook => {
-            // Check if this book is in a specific shelf
-            const matchedBook = this.state.shelvedBooks.find(findBook => findBook.id === mapBook.id);
+          searchedBooks = this.dedupeArray(searchedBooks).map(mapBook => {
             // Assign the matched shelf to the book, or assign none if not matched
-            mapBook.shelf = matchedBook ? matchedBook.shelf : 'none';
+            mapBook.shelf = this.bookInArray(mapBook, this.state.shelvedBooks).shelf || 'none';
             return mapBook;
           });
         }
@@ -59,6 +54,28 @@ class BooksApp extends Component {
     else {
       this.setState({ searchedBooks: [] })
     }
+  }
+
+  /**
+  * @description Removes duplicate books from an array
+  * @param {array} books - The books array
+  * @returns {array} The deduped array
+  */
+  dedupeArray(books) {
+    return books.filter((filterBook, index, arrBooks) => {
+      return arrBooks.map(mapBook => mapBook.id).indexOf(filterBook.id) === index;
+    });
+  }
+
+  /**
+  * @description Check if a book object is in an array
+  * @param {object} bookObj - The book object
+  * @param {array} booksArr - The books array
+  * @returns {object} The book object if found
+  * @returns {bool} false if not found
+  */
+  bookInArray(bookObj, booksArr) {
+    return booksArr.find(findBook => findBook.id === bookObj.id) || false;
   }
 
   render() {
