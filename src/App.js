@@ -19,7 +19,7 @@ class BooksApp extends Component {
   * @description Sets the status for shelvedBooks getting the data from the APIs
   */
   getShelvedBooks() {
-    BooksAPI.getAll().then((books) => this.setState({ shelvedBooks: books }));
+    BooksAPI.getAll().then(books => this.setState({ shelvedBooks: books }));
   }
 
   /**
