@@ -16,7 +16,7 @@ function BookDetail(props) {
           <div className="book-shelf-changer">
               <select
                 defaultValue={book.shelf}
-                onChange={event => onChangeBookShelf(book, event.target.value)}
+                onChange={onChangeBookShelf(book)}
               >
                 <option value="" disabled>Move to...</option>
                 {shelves.map(shelf =>

@@ -27,8 +27,8 @@ class BooksApp extends Component {
   * @param {object} book - The book
   * @param {string} shelf - The id of the new shelf for the books
   */
-  changeBookShelf(book, shelf) {
-    BooksAPI.update(book, shelf).then(req => this.getShelvedBooks());
+  changeBookShelf = (book) => (e) => {
+    BooksAPI.update(book, e.target.value).then(req => this.getShelvedBooks());
   }
 
   /**
@@ -102,7 +102,7 @@ class BooksApp extends Component {
           <ListBooks
             shelves={shelves}
             books={shelvedBooks}
-            changeBookShelf={this.changeBookShelf.bind(this)}
+            changeBookShelf={this.changeBookShelf}
           />
          )} />
         <Route path="/search" render={({ history }) => (
@@ -110,7 +110,7 @@ class BooksApp extends Component {
             shelves={shelves}
             searchedBooks={searchedBooks}
             searchBooks={this.searchBooks.bind(this)}
-            changeBookShelf={this.changeBookShelf.bind(this)}
+            changeBookShelf={this.changeBookShelf}
           />
         )} />
       </div>
