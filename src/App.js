@@ -6,6 +6,11 @@ import * as BooksAPI from './BooksAPI';
 import './App.css';
 
 class BooksApp extends Component {
+  constructor(props) {
+    super(props);
+    this.searchBooks = this.searchBooks.bind(this);
+  }
+
   state = {
     shelvedBooks: [],
     searchedBooks: []
@@ -109,7 +114,7 @@ class BooksApp extends Component {
           <AddBook
             shelves={shelves}
             searchedBooks={searchedBooks}
-            searchBooks={this.searchBooks.bind(this)}
+            searchBooks={this.searchBooks}
             changeBookShelf={this.changeBookShelf}
           />
         )} />
